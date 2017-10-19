@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{fullpage}
+\usepackage{tabularx}
+\title{Project Specification}
+\author{Liam Gibbings}
+\begin{document}
+	\maketitle
+	\begin{table}[htbp]
+		\centering
+		\label{title-table}
+		\begin{tabular}{|l|l|}
+			\hline
+			Name: & Liam Gibbings \\ \hline
+			Date: & \today \\ \hline
+			Supervisor: & Michael Meredith \\ \hline
+			Course: & BSc Computer Science \\ \hline
+			Title: & Digitally watermarking audio files using steganographic techniques \\ \hline
+		\end{tabular}
+	\end{table}
+	
+	\setcounter{secnumdepth}{0}
+	\section{Elaboration}
+	\paragraph{}
+	In the music industry, piracy and content theft is a large issue which plagues music labels and independent creators. Other less honest content creators routinely infringe the copyrights of creators by stealing entire audio tracks or fragments of them for use in their own artwork. The problem here is distinguishing between those who have obtained the media legitimately and those who have not. It is also important to know who the thief is so that appropriate action can be taken.
+	\paragraph{}
+	My project will investigate techniques used in digital watermarking and determine a suitable method for embedding a digital watermark inside of an audio file which is difficult, if not impossible to tamper with or remove completely. The method in question must ensure that any distortion to the media is negligible or nonexistent so as to preserve the original quality of the media as per the interests of the end audience. This will be evaluated at the end of the project with a user survey and, where possible, some algorithmic method.
+	\paragraph{}
+	The final method used must not bloat the file in any way which a legitimate audience is forced to suffer for. The method must be able to withstand attacks such as lossy compression or even recording the playback of the audio via a microphone. Furthermore, we require the final, signed media to be transparent to media players so that not only does the audio sound exactly the same as it's non-watermarked version, the media player is unaware it is even there.
+	\paragraph{}
+	I will deliver an application which can be used by content creators to digitally sign their artwork so as to prove that a thief has illegally obtained and/or illegally utilized copyrighted media in their own work. Expanding this, the application will be able to determine who has distributed an artists media without their permission by watermarking the media with, for example, a user's unique ID. The tool should also be able to analyze an audio track and given the original digital signature, verify the authenticity of the media based on that signature by extracting the information held in the embedded watermark.
+	
+\newpage
+	
+	\section{Project Aims}
+	\begin{itemize}
+		\item Gain understanding of how digital watermarks are used to protect the copyrights of artists.
+  		\item Investigate characteristics of digital watermarking techniques.
+		\item Identify relevant steganographic methods for hiding information in audio files.
+		\item Identify software languages and libraries for manipulating audio files.
+		\item Deliver an application capable of signing an audio file with a rubust, difficult to discover watermark. The application must be able to recover the watermark after the signing has occured.
+	\end{itemize}
+	
+	\section{Timescale}
+	\begin{table}[htbp]
+		\centering
+		\label{timescale-table}
+		\begin{tabularx}{\textwidth}{|X|l|}
+			\hline
+			\textbf{Action}                                                                                                             & \textbf{Expected Date} \\ \hline
+			Deliver project specification and ethics form. \textbf{(M)}                                                                 & 20/11/2017             \\ \hline
+			Background research into audio watermarking and information hiding within sound files.                                      & 14/11/2017             \\ \hline
+			Investigate and decide upon suitable languages and frameworks to use in implementing the deliverable.                       & 21/11/2017             \\ \hline
+			Deliver information review. \textbf{(M)}                                                                                    & 01/12/2017             \\ \hline
+			Implement a prototype of the deliverable.                                                                                   & 15/01/2018             \\ \hline
+			Implement a final application to be delivered with the project report.                                                      & 05/02/2018             \\ \hline
+			Deliver provisional contents page. \textbf{(M)}                                                                             & 09/02/2018             \\ \hline
+			Test the robustness of the watermarks with wide range of audio samples and watermark information.                           & 24/02/2018             \\ \hline
+			Deliver critical evalulation and sections of draft report. \textbf{(M)}                                                     & 09/03/2018             \\ \hline
+			Gather subject pool for survey to test whether humans can detect distortion between watermarked and non-watermarked audio.  & 04/03/2018             \\ \hline
+			Perform the survey then evaluate and write up the results.                                                                  & 11/03/2018             \\ \hline
+			Submit body of written report to TurnitinUK. \textbf{(M)}                                                                   & 10/04/2018             \\ \hline
+			Submit report and deliverable to university. \textbf{(M)}                                                                   & 11/04/2018             \\ \hline
+			Demonstrate and describe application to supervisor and second marker. \textbf{(M)}                                          & Before 04/05/2018      \\ \hline
+		\end{tabularx}
+	\end{table}
+	\section{Deliverable}
+	\paragraph{}
+	I will deliver an application capable of signing an audio file with some given file and possibly some given key, such as a password. This application will also be able to extract the watermark from a signed file to recover the original information, such as the artist name, which the watermark contains. Finally the watermark should be robust, a characteristic which will be evaluated as part of this project.
+	
+	\section{Ethics}
+	\paragraph{}
+	In my opinion, no part of this project feasibly constitutes a breach of ethical conduct. I will gather a subject pool of survey participants who will give consent to participate in the survey and give consent for any data generated to be published in my written report.
+	
+\end{document}
