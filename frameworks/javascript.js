@@ -40,13 +40,23 @@ var obj = Object;
 obj.hello = "world";
 
 // Arrays are built in objects, they have properties and methods
-list_of_primes = [2, 3, 5, 7, 11, 13];
+var list_of_primes = [2, 3, 5, 7, 11, 13];
 list_of_primes.length; // 6
 list_of_primes.push(5);
 // They use zero based indexing
 list_of_primes[0] = 17;
 // And support keys
 list_of_primes["java"] = "script";
+// Define empty arrays like this
+var arr_data = Array(10)
+// Use for loop to fill array with 1-10
+for (var i = 1; i <= arr_data.length; i++) {
+  arr_data[i-1] = i;
+}
+// useful functions for arrays
+var mapped = arr_data.map( (number) => number * 2 ); // returns [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 ]
+var filtered = arr_data.filter( (number) => number % 2 ); // returns [ 1, 3, 5, 7, 9 ]
+var reduced = arr_data.reduce( (sum, number) => sum * number ); // returns 7257600
 
 // define function the normal way as an anonymous function
 // function declaration
@@ -178,3 +188,16 @@ var Car = function(reg_no) {
   this.reg_no = reg_no;
   Car.count++;
 }
+
+// Closures
+// Using a closure we can keep the scope of an object even when we leave the scope ourselves
+var timer = function() {
+  var start = new Date().getTime(); // scopes start to outer body but the returned function can still access it
+  return function () {
+    return new Date().getTime() - start;
+  };
+};
+var time_it = timer();
+console.log(time_it()); // 10ms
+console.log("wait 10 seconds");
+console.log(time_it()); // 10000ms

@@ -122,6 +122,10 @@ foo ; still returns "bar"
 ; defines a Vector
 (def simpleVector [1 2 3 4 5 6 "seven" [8 9]]) ; note the nested vector [8 9]
 (type simpleVector) ; returns clojure.lang.PersistentVector
+; to index it
+(simpleVector 2) ; returns 3
+; inserts into the vector
+(into v [5 6])
 ; Vectors are immutable but we can make a new one from the old
 ; to append to the end use conj
 (def secondVector (conj simpleVector \z)) ; defines secondVector with the z character appended to the end
@@ -154,7 +158,7 @@ thirdVector ; returns [\a 1 2 3 4 5 6 "seven" [8 9] \z]
 ; some returns the predicate if something in the collection matches boolean predicate or nil otherwise
 (some odd? '(2 4)) ; returns nil
 (some odd? [1 2 3 4]) ; returns true
-(some #{2} [1 2 3 4]) ; returns 2 because 2 is in the collection
+(some #{2} [1 2 3 4]) ; returns 2 because 2 is in the collection. {} denotes a set
 
 ; every? returns true if every element matches the predicate
 (every? odd? [1 3 5 7]) ; returns true because every element is odd
@@ -177,6 +181,8 @@ thirdVector ; returns [\a 1 2 3 4 5 6 "seven" [8 9] \z]
 ; last one with :let
 (for [v (range 10)
       :let [y (* v 3)] ; :let allows a block of logic
-      :when (odd? v)
+      :when (odd? y)
       ]
   y)
+
+(first "9283")
