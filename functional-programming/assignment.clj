@@ -1,55 +1,117 @@
-; Koans
+;;; Liam Gibbings
+;;; B4044389
+;;; Task one
 
-;1
+;;; Basic Koans
 
-(= 2 2/1 (- 2 0))
+;; 1. Some things may appear different, but be the same
 
-(not= :fill-in-the-blank "literally anything")
+; 2 and 2/1, although they look different are both of type Long. (long 2) evalulates
+; to the same as these, as does (- 2 0) since 2-0=2 which is also a long.
+(= 2 2/1 (long 2) (- 2 0))
 
+;; 2. When things cannot be equal, they must be different
+
+; not= will return true if all expressions are not equal. "clojure" is indeed not
+; equal to :fill-in-the-blank so the whole thing evalulates to true.
+(not= :fill-in-the-blank "clojure")
+
+;; 3. Construction of lists by adding an element to the front is simple
+
+; cons returns a new sequence with the first argument appended to the FRONT of the
+; second sequence argument. This means that (cons :a '(:b :c :d :e)) returns the lazy sequence
+; '(:b :c :d :e) with :a appended to the front which gives a new (since the sequence is immutable)
+; lazy sequence of '(:a :b :c :d :e)
 (= '(:a :b :c :d :e) (cons :a '(:b :c :d :e)))
 
+;; 4. You can use a list like a stack to get the first element
+
+; peek returns the first element in the
 (= :a (peek '(:a :b :c :d :e)))
 
+;; 5. You can populate vectors with any number of elements at once
+
+;
 (= [1 2] (vec '(1 2)))
 
+;; 6. Equality with collections is in terms of values
+
+;
 (= (list 1 2 3) (vector 1 2 3))
 
+;; 7. Clojure can tell you the intersection of sets
+
+;
 (= #{2 3} (clojure.set/intersection #{1 2 3 4} #{2 3 5}))
 
+;; 8. Maps can be used as lookup functions
+
+;
 (= 1 ({:a 1 :b 2} :a))
 
+;; 9. Maps are immutable, but you can create a new, 'changed' version
+
+;
 (= {1 "January" 2 "February"} (assoc {1 "January" } 2 "February"))
 
+;; 10. Functions are often defined before they are used
+
+;
 (defn multiply-by-ten [n]
   (* 10 n))
 (= 20 (multiply-by-ten 2))
 
-(= 25 (__ (fn [n] (* n n))))
+;; 11. Higher-order functions take function arguments
 
+;
+(= 25 (__
+  (fn [n] (* n n))))
+
+;; 12. Functions can join forces as one 'composed' function
+
+;
 (defn square [x] (* x x))
 (= 25 (let [inc-and-square (comp square inc)]
     (inc-and-square 4)))
 
+;; 13. There is a wide range of ways to generate a sequence
+
+;
 (= '(1 2 3 4) (range 1 5))
 
+;; 14. Iteration provides an infinite lazy sequence
+
+;
 (= (range 0 20) (take 20 (iterate inc 0)))
 
+;; 15. Sequence comprehensions can bind each element in turn to a symbol
+
+;
 (= '(0 1 2 3 4 5)
   (for [index (range 6)]
     index))
 
+;; 16. Sequence comprehensions can easily emulate mapping16. Sequence comprehensions can easily emulate mapping
+
+;
 (= '(0 1 4 9 16 25)
   (map (fn [index] (* index index))
     (range 6))
   (for [index (range 6)]
     (* index index)))
 
+;; 17. Recursion ends with a base case. Explain the following code (you do not need to add to it).
+
+; something about tail recursion
 (defn is-even? [n]
   (if (= n 0)
     true
     (not (is-even? (dec n)))))
 (= true (is-even? 0))
 
+;; 18. Having too many stack frames requires explicit tail calls with recur.
+
+;
 (defn is-even-bigint? [n]
   (loop [n n
     acc true]
@@ -58,12 +120,19 @@
   (recur (dec n) (not acc)))))
 (= false (is-even-bigint? 100003N))
 
+;; 19. Destructuring is an arbiter: it breaks up arguments
+
+;
 (= (str "First comes love, "
   "then comes marriage, "
   "then comes Clojure with the baby carriage")
 ((fn [[a b c]] __)
   ["love" "marriage" "Clojure"]))
 
+
+;; 20. Break up maps succinctly
+
+;
 (def test-address
   {:street-address "123 Test Lane"
   :city "Testerville"
@@ -71,3 +140,38 @@
 (= "123 Test Lane, Testerville, TX"
   (let [{:keys [street-address __ __]} test-address]
   __))
+
+
+;;; Advanced Koans
+
+; 1. Squaring Lists
+; The lone function accepts a single parameter called numbs and checks that it is a sequence of some kind
+; the filter then filters out any results that arent clojure number types using the number? predicate
+; map then maps the (guaranteed to be) number elements to the anonymous function: #(* % %) which squares each element
+; this mapped sequence is then returned
+(defn square [numbs] (when (sequential? numbs)
+  (->>
+    numbs
+    (filter number? numbs)
+    (map #(* % %))
+  )))
+
+; 2. Encoding
+; the to-morse variable defines a map with a-z as keys with corresponding values
+; being their respective morse code representation.
+(def codes {\a ".-" \b "-..." \c "-.-." \d "-.." \e "."
+               \f "..-." \g "--." \h "...." \i ".." \j ".---"
+               \k "-.-" \l ".-.." \m "--" \n "-." \o "---"
+               \p ".--." \q "--.-" \r ".-." \s "..." \t "-"
+               \u "..-" \v "...-" \w ".--" \x "-..-" \y "-.--" \z "--.."})
+
+(defn convert-char [char]
+  (->>
+    (get codes char " ")))
+
+(defn ascii-to-morse [ascii]
+  (->>
+    (map convert-char ascii)
+    ))
+
+(ascii-to-morse "helloworld")
