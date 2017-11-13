@@ -31,22 +31,27 @@
 
 ;; 5. You can populate vectors with any number of elements at once
 
-;
+; vec converts the lazy sequence '(1 2) to a vector which can be defined using square brackets []
+; so (vec '(1 2) is the same as [1 2]
 (= [1 2] (vec '(1 2)))
 
 ;; 6. Equality with collections is in terms of values
 
-;
+; (list 1 2 3) returns a persistent list and (vector 1 2 3) returns a persistent vector.
+; Because they are both collections containing the same elements, clojure treats them as equal.
 (= (list 1 2 3) (vector 1 2 3))
 
 ;; 7. Clojure can tell you the intersection of sets
 
-;
+; the syntax #{<elements>} is short hand for defining a set. The intersection of two sets is
+; a set which holds the values which are present in BOTH sets. Therefore #{2 3} is the same as
+; the intersection of #{1 2 3 4} and #{2 3 5} since 2 and 3 are present in both sets.
 (= #{2 3} (clojure.set/intersection #{1 2 3 4} #{2 3 5}))
 
 ;; 8. Maps can be used as lookup functions
 
-;
+; Inside {:a 1 :b 2}, the key :a is is associated with the value 1.  using ({:a 1 :b 2} :a),
+; we are looking up the value assigned to :a... which is 1. Therefore 1 is equal to ({:a 1 :b 2} :a).
 (= 1 ({:a 1 :b 2} :a))
 
 ;; 9. Maps are immutable, but you can create a new, 'changed' version
