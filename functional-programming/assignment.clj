@@ -170,13 +170,19 @@
                \p ".--." \q "--.-" \r ".-." \s "..." \t "-"
                \u "..-" \v "...-" \w ".--" \x "-..-" \y "-.--" \z "--.."})
 
-(defn convert-char [char]
+(defn ascii-morse [to-convert]
   (->>
-    (get codes char " ")))
+    (vec to-convert)
+    (map #(get codes %))
+    (apply str)
+))
 
-(defn ascii-to-morse [ascii]
+(defn morse-ascii [to-convert] (when (sequential? to-convert)
   (->>
-    (map convert-char ascii)
-    ))
+    to-convert
+    (map #(get (zipmap (vals codes) (keys codes)) %))
+    (apply str)
+)))
 
-(ascii-to-morse "helloworld")
+(ascii-morse "hello")
+(morse-ascii ["...." "." ".-.." ".-.."])
