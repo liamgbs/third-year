@@ -186,3 +186,4 @@ thirdVector ; returns [\a 1 2 3 4 5 6 "seven" [8 9] \z]
   y)
 
 (first "9283")
+(zipmap (vals codes) (keys codes))
