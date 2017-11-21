@@ -4,7 +4,7 @@ import "fmt"
 import "math/rand"
 import "time"
 
-func worker(result chan float64, darts_thrown int) {
+func worker(result chan int, darts_thrown int) {
   hitcount := 0
   // Create a random number generator using current time as a seed
   random_src := rand.NewSource(time.Now().UnixNano())
@@ -19,19 +19,19 @@ func worker(result chan float64, darts_thrown int) {
       hitcount++
     }
   }
-  partial_pi := 4.0 * float64(hitcount) / float64(darts_thrown)
-  // send partial_pi to the channel (we dont care about the order they arrive in
+  // send hitcount to the channel (we dont care about the order they arrive in
   // since theyre all sum reduced anyway).
-  result <- partial_pi
+  result <- hitcount
 }
 
 func main() {
-  threads := 4
+  threads := 2
   darts_thrown := 500000000
   // create a buffered channel where the buffer amount is equal to threads
   // ie. we can have thread number of values waiting to be read from the channel
-  result := make(chan float64, threads)
+  result := make(chan int, threads)
   var pi float64
+  var hitcount int
 
   // Start a timer
   start_time := time.Now()
@@ -43,11 +43,11 @@ func main() {
 
   // take all the buffered values from the channel and add them together
   for j := 0; j < threads; j++ {
-    pi = pi + <- result
+    hitcount = hitcount + <- result
   }
 
   // divide the sum of all thread results by the number of threads to get pi
-  pi = pi / float64(threads)
+  pi = 4.0 * float64(hitcount) / float64(darts_thrown)
 
   // Measure time taken to execute
   elapsed := time.Since(start_time)
