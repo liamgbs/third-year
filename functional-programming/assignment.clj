@@ -56,20 +56,28 @@
 
 ;; 9. Maps are immutable, but you can create a new, 'changed' version
 
-;
+; The assoc function will take the {1 "January" } map, which is immutable so rather than
+; modify it and add the new key-val pair 2 "February", it will construct a brand new
+; map containing all the key-val pairs it now knows about and return it.
 (= {1 "January" 2 "February"} (assoc {1 "January" } 2 "February"))
 
 ;; 10. Functions are often defined before they are used
 
-;
+; defn multiply-by-ten defines a function with that name, it takes one parameter called n.
+; the one line (* 10 n)) simply means multiply the parameter n by 10. Therefore (multiply-by-ten 2)
+; will return 20
 (defn multiply-by-ten [n]
   (* 10 n))
 (= 20 (multiply-by-ten 2))
 
 ;; 11. Higher-order functions take function arguments
 
-;
-(= 25 (__
+; The first anonymous function is evaluated with 5 as the argment, this simply
+; returns the argument. That return value is then passed to the next anonymous
+; function which squares its input and returns it. In this case the input is 5
+; and 5 squared is 25 so the whole thing returns true.
+(= 25 (
+  (fn [n] (n 5))
   (fn [n] (* n n))))
 
 ;; 12. Functions can join forces as one 'composed' function
@@ -81,12 +89,19 @@
 
 ;; 13. There is a wide range of ways to generate a sequence
 
-;
+; The range function generates a sequence (specifically a LongRange)
+; from x to y-1 where x and y are the parameters. Because of this, (range 1 5)
+; is equal to the lazy sequence (1 2 3 4).
 (= '(1 2 3 4) (range 1 5))
 
 ;; 14. Iteration provides an infinite lazy sequence
 
-;
+; (iterate inc 0) takes an initial argument, in this case zero, and applies a
+; macro, in this case inc, to create an infinite sequence. In other words, (iterate inc 0)
+; will generate a sequence from 0 to infinity. To extract a usable subset of the
+; infinite sequence we can use 'take 20' which will extract the first 20 elements from
+; that infinite sequence. So (take 20 (iterate inc 0)) will give us 0 - 19 which are
+; the first 20 elements, this is also the same as saying (range 0 20).
 (= (range 0 20) (take 20 (iterate inc 0)))
 
 ;; 15. Sequence comprehensions can bind each element in turn to a symbol
@@ -149,7 +164,7 @@
 
 ;;; Advanced Koans
 
-; 1. Squaring Lists
+;; 1. Squaring Lists
 ; The lone function accepts a single parameter called numbs and checks that it is a sequence of some kind
 ; the filter then filters out any results that arent clojure number types using the number? predicate
 ; map then maps the (guaranteed to be) number elements to the anonymous function: #(* % %) which squares each element
@@ -161,8 +176,8 @@
     (map #(* % %))
   )))
 
-; 2. Encoding
-; the to-morse variable defines a map with a-z as keys with corresponding values
+;; 2. Encoding
+; the codes variable defines a map with a-z as keys with corresponding values
 ; being their respective morse code representation.
 (def codes {\a ".-" \b "-..." \c "-.-." \d "-.." \e "."
                \f "..-." \g "--." \h "...." \i ".." \j ".---"
@@ -170,6 +185,9 @@
                \p ".--." \q "--.-" \r ".-." \s "..." \t "-"
                \u "..-" \v "...-" \w ".--" \x "-..-" \y "-.--" \z "--.."})
 
+; The ascii-morse function takes in a string and converts it to a vector. Using the above map,
+; the vector of characters is converted to morse code and then passed back to the
+; apply function to convert back to a string representation.
 (defn ascii-morse [to-convert]
   (->>
     (vec to-convert)
@@ -186,3 +204,7 @@
 
 (ascii-morse "hello")
 (morse-ascii ["...." "." ".-.." ".-.."])
+
+;; 3. Meteor Falls
+
+(slurp "https://data.nasa.gov/resource/y77d-th95.json")
