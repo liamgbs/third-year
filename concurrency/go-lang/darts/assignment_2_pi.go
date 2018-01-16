@@ -4,6 +4,10 @@ import "fmt"
 import "math/rand"
 import "time"
 
+const threads = 1
+const darts_thrown = 1000000
+
+
 func worker(result chan int, darts_thrown int) {
   hitcount := 0
   // Create a random number generator using current time as a seed
@@ -25,8 +29,6 @@ func worker(result chan int, darts_thrown int) {
 }
 
 func main() {
-  threads := 2
-  darts_thrown := 500000000
   // create a buffered channel where the buffer amount is equal to threads
   // ie. we can have thread number of values waiting to be read from the channel
   result := make(chan int, threads)
@@ -54,6 +56,7 @@ func main() {
 
   fmt.Println("Number of threads:", threads)
   fmt.Println("Number of throws:", darts_thrown)
+  fmt.Println("Hitcount:", hitcount)
   fmt.Println("Time elapsed:", elapsed)
   fmt.Println("Estimated pi:", pi)
   fmt.Println("Actual pi:", 3.1415926535)
